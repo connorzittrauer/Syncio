@@ -44,9 +44,9 @@ namespace Syncio
 
             watcher.Changed += OnChanged;
             watcher.Created += OnCreated;
-            //watcher.Deleted += OnDeleted;
-            //watcher.Renamed += OnRenamed;
-            //watcher.Error += OnError;
+            watcher.Deleted += OnDeleted;
+            watcher.Renamed += OnRenamed;
+            watcher.Error += OnError;
 
             watcher.Filter = "*.txt";
             watcher.IncludeSubdirectories = true;
@@ -72,14 +72,18 @@ namespace Syncio
            
         }
 
-        private void OnDeleted(object sender, FileSystemEventArgs e) =>
-            ListBoxLog.Items.Add($"Deleted: {e.FullPath}");
+        private void OnDeleted(object sender, FileSystemEventArgs e)
+        {
+            this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"Deleted: {e.FullPath}"));
+        }
+            
+            
 
         private void OnRenamed(object sender, RenamedEventArgs e)
         {
-            ListBoxLog.Items.Add($"Renamed:");
-            ListBoxLog.Items.Add($"    Old: {e.OldFullPath}");
-            ListBoxLog.Items.Add($"    New: {e.FullPath}");
+            this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"Renamed:"));
+            this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"    Old: {e.OldFullPath}"));
+            this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"    New: {e.FullPath}")); 
         }
 
         private void OnError(object sender, ErrorEventArgs e) =>
@@ -89,9 +93,9 @@ namespace Syncio
         {
             if (ex != null)
             {
-                ListBoxLog.Items.Add($"Message: {ex.Message}");
-                ListBoxLog.Items.Add("Stacktrace:");
-                ListBoxLog.Items.Add(ex.StackTrace);
+                this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"Message: {ex.Message}")); 
+                this.Dispatcher.Invoke(() => ListBoxLog.Items.Add("Stacktrace:"));
+                this.Dispatcher.Invoke(() => ListBoxLog.Items.Add(ex.StackTrace));
                 PrintException(ex.InnerException);
             }
         }
