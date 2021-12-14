@@ -25,7 +25,6 @@ namespace Syncio
     {
         Monitor monitor = new Monitor();
   
-
         public MainWindow()
         {
             InitializeComponent();  
@@ -39,6 +38,8 @@ namespace Syncio
 
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.ShowDialog();
+
+            //pass user selected directory to the FileSystemWatcher
             monitor.InitializeWatcher(dialog.SelectedPath);
 
 

@@ -5,12 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Syncio"
         mc:Ignorable="d"
-        Title="MainWindow" Height="351" Width="885">
+        Title="MainWindow" Height="351" Width="885" ResizeMode="NoResize">
     <Grid>
-        <Label Content="Monitor Directory" HorizontalAlignment="Left" Margin="18,33,0,0" VerticalAlignment="Top" Height="33" Width="162" FontSize="16"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="398*"/>
+            <ColumnDefinition Width="487*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Folder A" HorizontalAlignment="Left" Margin="18,33,0,0" VerticalAlignment="Top" Height="33" Width="162" FontSize="16"/>
         <TextBox x:Name="BaseDirectoryInput" HorizontalAlignment="Left" Margin="18,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Height="16" MouseDoubleClick="BaseDirectoryInput_MouseDoubleClick"/>
-        <ListBox x:Name="ListBoxLog" Margin="10,152,10,10"/>
+        <ListBox x:Name="ListBoxLog" Margin="10,152,10,10" Grid.ColumnSpan="2"/>
         <Label Content="File Log:" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top"/>
+        <Label Content="Folder B&#xD;&#xA;" HorizontalAlignment="Center" Margin="0,33,0,0" VerticalAlignment="Top" Height="33" Width="163" FontSize="16" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="DestinationDirectoryInput" HorizontalAlignment="Left" Margin="361,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Height="16" MouseDoubleClick="BaseDirectoryInput_MouseDoubleClick" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
 
