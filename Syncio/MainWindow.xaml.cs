@@ -24,7 +24,7 @@ namespace Syncio
     public partial class MainWindow : Window
     {
         Monitor monitor = new Monitor();
-  
+        String source, target;
         public MainWindow()
         {
             InitializeComponent();  
@@ -39,10 +39,33 @@ namespace Syncio
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.ShowDialog();
 
+
+            source = dialog.SelectedPath;
+
             //pass user selected directory to the FileSystemWatcher
-            monitor.InitializeWatcher(dialog.SelectedPath);
+            monitor.InitializeWatcher(source);
+            Debug.WriteLine(source);
 
 
         }
+
+        private void TargetDirectoryInput_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.ShowDialog();
+
+
+            target = dialog.SelectedPath;
+
+            //pass user selected directory to the FileSystemWatcher
+            //monitor.InitializeWatcher(source);
+            Debug.WriteLine(target);
+
+
+        }
+
+
+
     }
 }

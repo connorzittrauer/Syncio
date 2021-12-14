@@ -13,10 +13,12 @@
         </Grid.ColumnDefinitions>
         <Label Content="Folder A" HorizontalAlignment="Left" Margin="18,33,0,0" VerticalAlignment="Top" Height="33" Width="162" FontSize="16"/>
         <TextBox x:Name="BaseDirectoryInput" HorizontalAlignment="Left" Margin="18,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Height="16" MouseDoubleClick="BaseDirectoryInput_MouseDoubleClick"/>
+        <TextBox x:Name="TargetDirectoryInput" HorizontalAlignment="Left" Margin="361,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Height="16" MouseDoubleClick="TargetDirectoryInput_MouseDoubleClick" Grid.ColumnSpan="2"/>
         <ListBox x:Name="ListBoxLog" Margin="10,152,10,10" Grid.ColumnSpan="2"/>
         <Label Content="File Log:" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top"/>
         <Label Content="Folder B&#xD;&#xA;" HorizontalAlignment="Center" Margin="0,33,0,0" VerticalAlignment="Top" Height="33" Width="163" FontSize="16" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="DestinationDirectoryInput" HorizontalAlignment="Left" Margin="361,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" Height="16" MouseDoubleClick="BaseDirectoryInput_MouseDoubleClick" Grid.ColumnSpan="2"/>
+
+
     </Grid>
 </Window>
 
