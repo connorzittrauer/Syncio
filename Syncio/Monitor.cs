@@ -9,7 +9,7 @@ namespace Syncio
     class Monitor
     {
         FileSystemWatcher watcher;
-        public void InitializeWatcher(String filePath)
+        public void Watch(String filePath)
         {
             //watcher = new FileSystemWatcher(@"C:\Users\Connor\Desktop\Test");
             watcher = new FileSystemWatcher(@filePath);
