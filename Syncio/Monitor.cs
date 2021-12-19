@@ -11,7 +11,6 @@ namespace Syncio
         FileSystemWatcher watcher;
         public void Watch(String filePath)
         {
-            //watcher = new FileSystemWatcher(@"C:\Users\Connor\Desktop\Test");
             watcher = new FileSystemWatcher(@filePath);
             
             watcher.NotifyFilter = NotifyFilters.Attributes
@@ -29,7 +28,8 @@ namespace Syncio
             watcher.Renamed += OnRenamed;
             //watcher.Error += OnError;
 
-            watcher.Filter = "*.txt";
+            //watcher.Filter = "*.txt";
+            watcher.Filter = "*.*";
             watcher.IncludeSubdirectories = true;
             watcher.EnableRaisingEvents = true;
 

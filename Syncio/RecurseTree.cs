@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Text;
 
 namespace Syncio
-{   
+{
     class RecurseTree
     {
         List<Object> hash = new List<Object>();
@@ -62,7 +62,7 @@ namespace Syncio
                 // Now find all the subdirectories under this directory.
                 subDirs = root.GetDirectories();
 
-          
+
 
 
                 //here is where the folders are retrieved
@@ -75,7 +75,7 @@ namespace Syncio
                     //here could  pass each directory to the monitor
                     //watcher.InitializeWatcher(dirInfo.ToString());
                     subDirectories.Add(dirInfo.ToString());
-                    
+
 
                     hash.Add(dirInfo);
 
@@ -84,7 +84,7 @@ namespace Syncio
 
                 }
 
-                
+
             }
         }
 
@@ -98,7 +98,7 @@ namespace Syncio
             return subDirectories;
         }
 
-        
+
 
 
     }

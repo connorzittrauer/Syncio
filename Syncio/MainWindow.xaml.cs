@@ -24,11 +24,13 @@ namespace Syncio
     public partial class MainWindow : Window
     {
         Monitor monitor = new Monitor();
+        DirectoryInfo sourceDir, targetDir;
+
         RecurseTree walkSource = new RecurseTree();
         RecurseTree walkTarget = new RecurseTree();
         List<Object> sourceTree = new List<object>();
         List<Object> targetTree = new List<object>();
-        FileDriver driver = new FileDriver();
+        FileManager driver = new FileManager();
 
         String source, target;
         public MainWindow()
@@ -52,17 +54,16 @@ namespace Syncio
             BaseDirectoryInput.Text = dialog.SelectedPath;
 
             //pass user selected directory to the FileSystemWatcher
-            monitor.Watch(source);
-            Debug.WriteLine(source);
+            AddMonitors();
 
-            DirectoryInfo dir = new DirectoryInfo(source);
+            sourceDir = new DirectoryInfo(source);
             
             //recurse through the file system
-            walkSource.WalkDirectoryTree(dir);
+            walkSource.WalkDirectoryTree(sourceDir);
 
             sourceTree = walkSource.GetHashSet();
 
-            Debug.WriteLine(sourceTree[0]);
+            //Debug.WriteLine(sourceTree[0]);
 
 
 
@@ -80,8 +81,8 @@ namespace Syncio
             TargetDirectoryInput.Text = dialog.SelectedPath;
             Debug.WriteLine("TARGET DIRECTORY: "+ target);
 
-            DirectoryInfo dir = new DirectoryInfo(target);
-            walkTarget.WalkDirectoryTree(dir);
+            targetDir = new DirectoryInfo(target);
+            walkTarget.WalkDirectoryTree(targetDir);
 
             //targetTree = walkTarget.GetHashSet();
 
@@ -91,12 +92,19 @@ namespace Syncio
         private void ButtonSync_Click(object sender, RoutedEventArgs e)
         {
 
-            //OK so need to append file name to directory in second argument
-            //string file = sourceTree[0].ToString();
-            //var dest = @"C:\Users\Connor\3D Objects\Test - Copy\plz-work.txt";
-            //File.Copy(file, dest);
+            driver.InitialCopy(source, target, true);
 
 
+
+        }
+
+        /*
+          This adds monitors to the root director, to every sub directory and so on
+         */
+        private void AddMonitors()
+        {
+            //monitors root directory
+            monitor.Watch(source);
 
             //this monitors all of the sub directories
             var subs = walkSource.GetSubs();
@@ -107,6 +115,45 @@ namespace Syncio
 
         }
 
+        //lets just get the initial copy down first, need to copy folder 123 to the sync folder
+        //private void InitialCopy()
+        //{
+        //    DirectoryCopy(source, target, true);
+        //}
+
+        //private void DirectoryCopy(string sourceDirName, string destDirname, bool copySubDirs)
+        //{
+        //    DirectoryInfo sourceDir = new DirectoryInfo(sourceDirName);
+
+        //    if (!sourceDir.Exists)
+        //    {
+        //        System.Windows.MessageBox.Show("Please select a valid directory");
+        //    }
+
+        //    DirectoryInfo[] sourceDirs = sourceDir.GetDirectories();
+
+        //    //if the destination directory doesn't exist, create it
+        //    Directory.CreateDirectory(destDirname);
+
+        //    FileInfo[] files = sourceDir.GetFiles();
+
+            
+        //    foreach(FileInfo file in files)
+        //    {
+        //        string tempPath = System.IO.Path.Combine(destDirname.ToString(), file.Name);
+        //        file.CopyTo(tempPath, false);
+        //    }
+
+        //    if (copySubDirs)
+        //    {
+        //        foreach (DirectoryInfo subdir in sourceDirs)
+        //        {
+        //            string tempPath = System.IO.Path.Combine(destDirname.ToString(), subdir.Name);
+        //            DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
+        //        }
+        //    }
+
+        //}
 
 
     }
