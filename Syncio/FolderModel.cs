@@ -36,8 +36,6 @@ namespace Syncio
         override
         public string CreationTime
         {
-            //get { return getCreationTime(new FileInfo(filePath)); }
-
             get
             {
                 var temp = new FileInfo(directory);
@@ -63,6 +61,10 @@ namespace Syncio
             this.directory = directory;
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
 
     }
 }

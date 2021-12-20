@@ -12,7 +12,9 @@ namespace Syncio
         int count = 0;
 
         Monitor watcher = new Monitor();
-        Node<String> root_node = new Node<string>(null);
+        
+        //Node<String> root_node = new Node<string>(null);
+        Node<Model> root_node = new Node<Model>(null);
 
         public RecurseDirectoryTree()
         {
@@ -24,14 +26,14 @@ namespace Syncio
             System.IO.DirectoryInfo[] subDirs = null;
 
             count++;
+
+            //root_node.addChild(new Node<string>(root.ToString()));
+
+            root_node.addChild(new Node<Model>(new FolderModel(root.ToString())));
             
-            root_node.addChild(new Node<string>(root.ToString()));
 
             //if there is a new directory, that need to be a new node, and the files below needed to be added to that node, instead of the just the root
-             if (count > 0)
-            {
 
-            }
             //Debug.WriteLine(root.ToString()); 
 
             // First, process all the files directly under this folder
@@ -61,8 +63,9 @@ namespace Syncio
                 foreach (System.IO.FileInfo file in files)
                 {
                     //Debug.WriteLine("This is the file: " + file.FullName);
-                    root_node.addChild(new Node<string>(file.FullName));
+                    //root_node.addChild(new Node<string>(file.FullName));
 
+                    root_node.addChild(new Node<Model>(new FileModel(file.FullName)));
 
                 }
 
@@ -104,15 +107,21 @@ namespace Syncio
 
         public void PrintTree()
         {
-          
-            root_node.printTree(root_node, "");
+           
+           root_node.printTree(root_node, "");
+
+
         }
 
-        public Node<String> GetTree()
+        //public Node<String> GetTree()
+        //{
+        //    return root_node;
+        //}
+
+        public Node<Model> GetDirectoryTree()
         {
             return root_node;
         }
-
 
 
 

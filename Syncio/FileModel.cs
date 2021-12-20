@@ -70,5 +70,9 @@ namespace Syncio
             hash = hasher.GenerateHash(filePath);
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
