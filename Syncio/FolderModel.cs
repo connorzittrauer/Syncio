@@ -5,26 +5,21 @@ using System.Text;
 
 namespace Syncio
 {
-    class FileModel : Model
+    class FolderModel : Model
     {
-        string filePath;
-        string hash;
-        Hasher hasher = new Hasher();
+        string directory;
+
         override
         public string Hash
         {
-            get
-            { return hash; }
-
+            get { return null; }
         }
         override
         public string AbsolutePath
         {
             get
             {
-                var temp = new FileInfo(filePath);
-                var cast = (FileSystemInfo)(temp);
-                return cast.FullName.ToString();
+                return new DirectoryInfo(directory).FullName;
             }
 
         }
@@ -33,9 +28,8 @@ namespace Syncio
         {
             get
             {
-                var temp = new FileInfo(filePath);
-                var cast = (FileSystemInfo)(temp);
-                return cast.Name.ToString();
+                return new DirectoryInfo(directory).Name;
+
             }
         }
 
@@ -46,7 +40,7 @@ namespace Syncio
 
             get
             {
-                var temp = new FileInfo(filePath);
+                var temp = new FileInfo(directory);
                 var cast = (FileSystemInfo)(temp);
                 return cast.CreationTime.ToString();
             }
@@ -58,17 +52,17 @@ namespace Syncio
             get
             {
 
-                var temp = new FileInfo(filePath);
+                var temp = new FileInfo(directory);
                 var cast = (FileSystemInfo)(temp);
                 return cast.Attributes.ToString();
             }
         }
 
-        public FileModel(String filePath)
+        public FolderModel(String directory)
         {
-            this.filePath = filePath;
-            hash = hasher.GenerateHash(filePath);
+            this.directory = directory;
         }
+
 
     }
 }
