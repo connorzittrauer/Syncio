@@ -10,7 +10,7 @@ namespace Syncio
     {
         HashComparer comp = new HashComparer();
 
-        //takes in a hashset as argument, compare the two, if unequal then copy over files
+        //This class could make use of the events triggered from the Monitor class, when a change is a detected in the source directory a certain method is invoked 
 
         public FileManager()
         {
@@ -52,6 +52,28 @@ namespace Syncio
             }
 
         }
+
+        public void Create()
+        {
+           
+        }
+
+        public void Change()
+        {
+
+        }
+
+        public void Rename()
+        {
+
+        }
+        public void Delete()
+        {
+
+        }
+
+
+
 
 
 

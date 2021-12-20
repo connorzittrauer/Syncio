@@ -35,10 +35,10 @@ namespace Syncio
         String source, target;
         public MainWindow()
         {
-            InitializeComponent();  
+            InitializeComponent();
         }
 
-        
+
 
         //so now I've got two trees that represent each directory need to compare and copy over the relevant files
 
@@ -57,7 +57,7 @@ namespace Syncio
             AddMonitors();
 
             sourceDir = new DirectoryInfo(source);
-            
+
             //recurse through the file system
             walkSource.WalkDirectoryTree(sourceDir);
 
@@ -79,7 +79,7 @@ namespace Syncio
             target = dialog.SelectedPath;
 
             TargetDirectoryInput.Text = dialog.SelectedPath;
-            Debug.WriteLine("TARGET DIRECTORY: "+ target);
+            Debug.WriteLine("TARGET DIRECTORY: " + target);
 
             targetDir = new DirectoryInfo(target);
             walkTarget.WalkDirectoryTree(targetDir);
@@ -137,7 +137,7 @@ namespace Syncio
 
         //    FileInfo[] files = sourceDir.GetFiles();
 
-            
+
         //    foreach(FileInfo file in files)
         //    {
         //        string tempPath = System.IO.Path.Combine(destDirname.ToString(), file.Name);

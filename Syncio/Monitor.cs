@@ -35,6 +35,7 @@ namespace Syncio
 
         }
 
+        //These methods need to to the target directory on changed
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
             if (e.ChangeType != WatcherChangeTypes.Changed)
@@ -43,7 +44,7 @@ namespace Syncio
             }
             var log = $"Changed: {e.FullPath}";
 
-            Debug.WriteLine(log);
+            //Debug.WriteLine(log);
 
         }
 
@@ -58,7 +59,7 @@ namespace Syncio
         {
             //this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"Deleted: {e.FullPath}"));
             var log = $"Deleted: {e.FullPath}";
-            Debug.WriteLine(log);
+            //Debug.WriteLine(log);
         }
 
 
@@ -68,6 +69,8 @@ namespace Syncio
             //this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"Renamed:"));
             //this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"    Old: {e.OldFullPath}"));
             //this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"    New: {e.FullPath}"));
+
+
 
             Debug.WriteLine($"Renamed:");
             Debug.WriteLine($"Old: {e.OldFullPath}");
