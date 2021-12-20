@@ -7,10 +7,11 @@ namespace Syncio
 {
     class RecurseTree
     {
-        List<Object> hash = new List<Object>();
+        //List<Object> hash = new List<Object>();
         List<string> subDirectories = new List<string>();
 
         Monitor watcher = new Monitor();
+        Tree<String> root_node = new Tree<string>(null);
 
         public RecurseTree()
         {
@@ -21,6 +22,7 @@ namespace Syncio
             System.IO.FileInfo[] files = null;
             System.IO.DirectoryInfo[] subDirs = null;
 
+            root_node.addChild(new Tree<string>(root.ToString()));
 
             // First, process all the files directly under this folder
             try
@@ -52,9 +54,11 @@ namespace Syncio
                     // want to open, delete or modify the file, then
                     // a try-catch block is required here to handle the case
                     // where the file has been deleted since the call to TraverseTree().
-                    Debug.WriteLine("This is the file: " + file.FullName);
 
-                    hash.Add(file.FullName);
+                    //Debug.WriteLine("This is the file: " + file.FullName);
+
+                    //hash.Add(file.FullName);
+                    root_node.addChild(new Tree<string>(file.FullName));
 
 
                 }
@@ -69,15 +73,20 @@ namespace Syncio
                 foreach (System.IO.DirectoryInfo dirInfo in subDirs)
                 {
                     // Resursive call for each subdirectory.
-                    Debug.WriteLine("This is the Folder: " + dirInfo);
+                    
+                    //Debug.WriteLine("This is the Folder: " + dirInfo);
 
 
                     //here could  pass each directory to the monitor
                     //watcher.InitializeWatcher(dirInfo.ToString());
+                    
                     subDirectories.Add(dirInfo.ToString());
 
 
-                    hash.Add(dirInfo);
+                    //hash.Add(dirInfo);
+                    //root_node.addChild(new Tree<string>(dirInfo.ToString()));
+
+                    //Debug.WriteLine(dirInfo.ToString());
 
                     WalkDirectoryTree(dirInfo);
 
@@ -88,14 +97,25 @@ namespace Syncio
             }
         }
 
-        public List<Object> GetHashSet()
-        {
-            return hash;
-        }
+        //public List<Object> GetHashSet()
+        //{
+        //    return hash;
+        //}
 
         public List<String> GetSubs()
         {
             return subDirectories;
+        }
+
+        public void PrintTree()
+        {
+          
+            root_node.printTree(root_node, "");
+        }
+
+        public Tree<String> GetTree()
+        {
+            return root_node;
         }
 
 

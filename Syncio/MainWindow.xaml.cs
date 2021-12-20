@@ -61,11 +61,11 @@ namespace Syncio
             //recurse through the file system
             walkSource.WalkDirectoryTree(sourceDir);
 
-            sourceTree = walkSource.GetHashSet();
+            //sourceTree = walkSource.GetHashSet();
 
             //Debug.WriteLine(sourceTree[0]);
 
-
+            walkSource.PrintTree();
 
         }
 
@@ -87,6 +87,8 @@ namespace Syncio
             //targetTree = walkTarget.GetHashSet();
 
             //Debug.WriteLine(targetTree[0]);
+
+            
         }
 
         private void ButtonSync_Click(object sender, RoutedEventArgs e)
@@ -115,45 +117,8 @@ namespace Syncio
 
         }
 
-        //lets just get the initial copy down first, need to copy folder 123 to the sync folder
-        //private void InitialCopy()
-        //{
-        //    DirectoryCopy(source, target, true);
-        //}
 
-        //private void DirectoryCopy(string sourceDirName, string destDirname, bool copySubDirs)
-        //{
-        //    DirectoryInfo sourceDir = new DirectoryInfo(sourceDirName);
-
-        //    if (!sourceDir.Exists)
-        //    {
-        //        System.Windows.MessageBox.Show("Please select a valid directory");
-        //    }
-
-        //    DirectoryInfo[] sourceDirs = sourceDir.GetDirectories();
-
-        //    //if the destination directory doesn't exist, create it
-        //    Directory.CreateDirectory(destDirname);
-
-        //    FileInfo[] files = sourceDir.GetFiles();
-
-
-        //    foreach(FileInfo file in files)
-        //    {
-        //        string tempPath = System.IO.Path.Combine(destDirname.ToString(), file.Name);
-        //        file.CopyTo(tempPath, false);
-        //    }
-
-        //    if (copySubDirs)
-        //    {
-        //        foreach (DirectoryInfo subdir in sourceDirs)
-        //        {
-        //            string tempPath = System.IO.Path.Combine(destDirname.ToString(), subdir.Name);
-        //            DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
-        //        }
-        //    }
-
-        //}
+  
 
 
     }

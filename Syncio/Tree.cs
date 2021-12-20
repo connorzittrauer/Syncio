@@ -15,6 +15,7 @@ namespace Syncio
             public Tree(T data)
             {
                 this.data = data;
+            
             }
 
             public Tree<T> addChild(Tree<T> child)
