@@ -63,7 +63,7 @@ namespace Syncio
 
         public override string ToString()
         {
-            return Name;
+            return AbsolutePath;
         }
 
     }
