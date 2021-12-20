@@ -26,10 +26,8 @@ namespace Syncio
         Monitor monitor = new Monitor();
         DirectoryInfo sourceDir, targetDir;
 
-        RecurseTree walkSource = new RecurseTree();
-        RecurseTree walkTarget = new RecurseTree();
-        List<Object> sourceTree = new List<object>();
-        List<Object> targetTree = new List<object>();
+        RecurseDirectoryTree walkSource = new RecurseDirectoryTree();
+        RecurseDirectoryTree walkTarget = new RecurseDirectoryTree();
         FileManager driver = new FileManager();
 
         String source, target;
@@ -61,11 +59,9 @@ namespace Syncio
             //recurse through the file system
             walkSource.WalkDirectoryTree(sourceDir);
 
-            //sourceTree = walkSource.GetHashSet();
-
-            //Debug.WriteLine(sourceTree[0]);
-
             walkSource.PrintTree();
+
+
 
         }
 
@@ -79,14 +75,10 @@ namespace Syncio
             target = dialog.SelectedPath;
 
             TargetDirectoryInput.Text = dialog.SelectedPath;
-            Debug.WriteLine("TARGET DIRECTORY: " + target);
+
 
             targetDir = new DirectoryInfo(target);
             walkTarget.WalkDirectoryTree(targetDir);
-
-            //targetTree = walkTarget.GetHashSet();
-
-            //Debug.WriteLine(targetTree[0]);
 
             
         }
@@ -95,8 +87,6 @@ namespace Syncio
         {
 
             driver.InitialCopy(source, target, true);
-
-
 
         }
 

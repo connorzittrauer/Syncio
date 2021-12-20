@@ -5,15 +5,16 @@ using System.Text;
 
 namespace Syncio
 {
-    class RecurseTree
+    class RecurseDirectoryTree
     {
-        //List<Object> hash = new List<Object>();
+
         List<string> subDirectories = new List<string>();
+        int count = 0;
 
         Monitor watcher = new Monitor();
-        Tree<String> root_node = new Tree<string>(null);
+        Node<String> root_node = new Node<string>(null);
 
-        public RecurseTree()
+        public RecurseDirectoryTree()
         {
 
         }
@@ -22,7 +23,16 @@ namespace Syncio
             System.IO.FileInfo[] files = null;
             System.IO.DirectoryInfo[] subDirs = null;
 
-            root_node.addChild(new Tree<string>(root.ToString()));
+            count++;
+            
+            root_node.addChild(new Node<string>(root.ToString()));
+
+            //if there is a new directory, that need to be a new node, and the files below needed to be added to that node, instead of the just the root
+             if (count > 0)
+            {
+
+            }
+            //Debug.WriteLine(root.ToString()); 
 
             // First, process all the files directly under this folder
             try
@@ -50,15 +60,8 @@ namespace Syncio
             {
                 foreach (System.IO.FileInfo file in files)
                 {
-                    // In this example, we only access the existing FileInfo object. If we
-                    // want to open, delete or modify the file, then
-                    // a try-catch block is required here to handle the case
-                    // where the file has been deleted since the call to TraverseTree().
-
                     //Debug.WriteLine("This is the file: " + file.FullName);
-
-                    //hash.Add(file.FullName);
-                    root_node.addChild(new Tree<string>(file.FullName));
+                    root_node.addChild(new Node<string>(file.FullName));
 
 
                 }
@@ -72,22 +75,14 @@ namespace Syncio
                 //here is where the folders are retrieved
                 foreach (System.IO.DirectoryInfo dirInfo in subDirs)
                 {
-                    // Resursive call for each subdirectory.
+                    //watcher.Watch(dirInfo.ToString());
                     
                     //Debug.WriteLine("This is the Folder: " + dirInfo);
-
-
-                    //here could  pass each directory to the monitor
-                    //watcher.InitializeWatcher(dirInfo.ToString());
                     
                     subDirectories.Add(dirInfo.ToString());
 
 
-                    //hash.Add(dirInfo);
-                    //root_node.addChild(new Tree<string>(dirInfo.ToString()));
-
-                    //Debug.WriteLine(dirInfo.ToString());
-
+                    // Resursive call for each subdirectory.
                     WalkDirectoryTree(dirInfo);
 
 
@@ -113,7 +108,7 @@ namespace Syncio
             root_node.printTree(root_node, "");
         }
 
-        public Tree<String> GetTree()
+        public Node<String> GetTree()
         {
             return root_node;
         }
