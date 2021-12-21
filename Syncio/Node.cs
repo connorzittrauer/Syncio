@@ -5,77 +5,77 @@ using System.Text;
 
 namespace Syncio
 {
-        public class Node<Model>
+        public class Node<T>
         {
-            private Model data = default(Model);
+            private T data = default(T);
  
-            private List<Node<Model>> children = new List<Node<Model>>();
+            private List<Node<T>> children = new List<Node<T>>();
 
-            private Node<Model> parent = null;
+            private Node<T> parent = null;
 
-            List<Model> nodelist;
+            List<T> nodelist;
 
-            public Node(Model data)
+            public Node(T data)
             {
                 this.data = data;
             
             }
 
-            public Node<Model> addChild(Node<Model> child)
+            public Node<T> addChild(Node<T> child)
             {
                 child.setParent(child); //was originally passing "this" keyword
                 this.children.Add(child);
                 return child;
             }
 
-            public void addChildren(List<Node<Model>> children)
+            public void addChildren(List<Node<T>> children)
             {
                 children.ForEach(each => each.setParent(parent)); //was originally passing "this" keyword
                 this.children.AddRange(children);
 
             }
 
-            public List<Node<Model>> getChildren()
+            public List<Node<T>> getChildren()
             {
                 return children;
             }
 
-            public Model getData()
+            public T getData()
             {
 
                 return data;
             }
 
-            public void setData(Model data)
+            public void setData(T data)
             {
                 this.data = data;
             }
 
-            private void setParent(Node<Model> parent)
+            private void setParent(Node<T> parent)
             {
                 this.parent = parent;
             }
 
-            public Node<Model> getParent()
+            public Node<T> getParent()
             {
                 return parent;
             }
 
 
 
-            public void printTree(Node<Model> node, String appender)
-            {
-                Debug.WriteLine(appender + node.getData());
-                
-
-                
-                node.getChildren().ForEach(each => printTree(each, appender + appender));
-
-            }
-
+        public void printTree(Node<T> node, String appender)
+        {
+            Debug.WriteLine(appender + node.getData());
+            node.getChildren().ForEach(each => printTree(each, appender + appender));
 
 
         }
+
+
+
+    }
  }
+
+
 
 

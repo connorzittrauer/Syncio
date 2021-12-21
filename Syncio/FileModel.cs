@@ -42,8 +42,6 @@ namespace Syncio
         override
         public string CreationTime
         {
-            //get { return getCreationTime(new FileInfo(filePath)); }
-
             get
             {
                 var temp = new FileInfo(filePath);
@@ -72,7 +70,7 @@ namespace Syncio
 
         public override string ToString()
         {
-            return AbsolutePath + " Hash " + Hash;
+            return AbsolutePath;
         }
     }
 }

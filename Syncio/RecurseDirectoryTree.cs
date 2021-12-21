@@ -9,46 +9,45 @@ namespace Syncio
     {
 
         List<string> subDirectories = new List<string>();
-        int count = 0;
+        Node<Model> node = new Node<Model>(null);
+        NodeFactory factory = new NodeFactory();
 
-        Monitor watcher = new Monitor();
-        
-        //Node<String> root_node = new Node<string>(null);
-        Node<Model> root_node = new Node<Model>(null);
+
+
 
         public RecurseDirectoryTree()
         {
-
+            //node.addChild(new Node<Model>(new FolderModel("C:\\Users\\Connor\\3D Objects\\Test")));
         }
-        public void WalkDirectoryTree(System.IO.DirectoryInfo root)
+        public void WalkDirectoryTree(System.IO.DirectoryInfo directory)
         {
             System.IO.FileInfo[] files = null;
             System.IO.DirectoryInfo[] subDirs = null;
 
-            count++;
 
-            //root_node.addChild(new Node<string>(root.ToString()));
 
-            root_node.addChild(new Node<Model>(new FolderModel(root.ToString())));
-            
+            //on the first pass, this is the root of the directory tree 
 
-            //if there is a new directory, that need to be a new node, and the files below needed to be added to that node, instead of the just the root
+            //this needs to be a new node every pass, node1, node2, and so on
+            //node.addChild(new Node<Model>(new FolderModel(directory.ToString())));
 
-            //Debug.WriteLine(root.ToString()); 
+
+            //if there is a new directory, that needs to be a new node, and the files below needed to be added to that node, instead of the just the root
+
+
+            //node = factory.CreateNode(1, directory.ToString());
+            factory.CreateNode(1, directory.ToString());
 
             // First, process all the files directly under this folder
             try
             {
-                files = root.GetFiles("*.*");
+                files = directory.GetFiles("*.*");
+  
             }
-            // This is thrown if even one of the files requires permissions greater
-            // than the application provides.
+
             catch (UnauthorizedAccessException e)
             {
-                // This code just writes out the message and continues to recurse.
-                // You may decide to do something different here. For example, you
-                // can try to elevate your privileges and access the file again.
-                //log.Add(e.Message);
+               Debug.WriteLine(e.Message);
             }
 
             catch (System.IO.DirectoryNotFoundException e)
@@ -62,28 +61,20 @@ namespace Syncio
             {
                 foreach (System.IO.FileInfo file in files)
                 {
-                    //Debug.WriteLine("This is the file: " + file.FullName);
-                    //root_node.addChild(new Node<string>(file.FullName));
-
-                    root_node.addChild(new Node<Model>(new FileModel(file.FullName)));
-
+                    //node.addChild(new Node<Model>(new FileModel(file.FullName)));
+                    
+                    //node.addChild(factory.CreateNode(2, file.FullName));
+                    factory.CreateNode(2, file.FullName);
                 }
 
                 // Now find all the subdirectories under this directory.
-                subDirs = root.GetDirectories();
+                subDirs = directory.GetDirectories();
 
-
-
-
-                //here is where the folders are retrieved
+                //here is where the subdirectories are retrieved
                 foreach (System.IO.DirectoryInfo dirInfo in subDirs)
                 {
-                    //watcher.Watch(dirInfo.ToString());
-                    
-                    //Debug.WriteLine("This is the Folder: " + dirInfo);
-                    
-                    subDirectories.Add(dirInfo.ToString());
 
+                    subDirectories.Add(dirInfo.ToString());
 
                     // Resursive call for each subdirectory.
                     WalkDirectoryTree(dirInfo);
@@ -95,10 +86,6 @@ namespace Syncio
             }
         }
 
-        //public List<Object> GetHashSet()
-        //{
-        //    return hash;
-        //}
 
         public List<String> GetSubs()
         {
@@ -107,20 +94,18 @@ namespace Syncio
 
         public void PrintTree()
         {
-           
-           root_node.printTree(root_node, "");
+
+           factory.print();
+
+           //node.printTree(node, " ");
 
 
         }
 
-        //public Node<String> GetTree()
-        //{
-        //    return root_node;
-        //}
 
         public Node<Model> GetDirectoryTree()
         {
-            return root_node;
+            return node;
         }
 
 

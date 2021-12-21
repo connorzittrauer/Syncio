@@ -8,7 +8,6 @@ namespace Syncio
 {
     class FileManager
     {
-        Hasher comp = new Hasher();
 
         //This class could make use of the events triggered from the Monitor class, when a change is a detected in the source directory a certain method is invoked 
 
