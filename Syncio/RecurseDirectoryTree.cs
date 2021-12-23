@@ -9,11 +9,9 @@ namespace Syncio
     {
 
         List<string> subDirectories = new List<string>();
-        //Node<Model> root = new Node<Model>(null);
-        NodeFactory factory = new NodeFactory();
 
         private List<Node<Model>> directoryList = new List<Node<Model>>();
-        //private Node<Model> root = new Node<Model>(new FolderModel("C:\\Users\\Connor\\3D Objects\\Test")); 
+
 
         public RecurseDirectoryTree()
         {
@@ -25,21 +23,10 @@ namespace Syncio
             System.IO.DirectoryInfo[] subDirs = null;
 
 
-
-            //on the first pass, this is the root of the directory tree 
-
-            //this needs to be a new node every pass, node1, node2, and so on
-
+            //a new node is added to the root (root directory) for each sub directory here
             Node<Model> sub = root.addChild(new Node<Model>(new FolderModel(directory.ToString())));
 
-
-            //if there is a new directory, that needs to be a new node, and the files below needed to be added to that node, instead of the just the root
-
-
             directoryList.Add(root);
-            //factory.CreateNode(1, directory.ToString());
-  
-
 
             // First, process all the files directly under this folder
             try
@@ -64,10 +51,6 @@ namespace Syncio
             {
                 foreach (System.IO.FileInfo file in files)
                 {
-                    //node.addChild(new Node<Model>(new FileModel(file.FullName)));
-
-
-                    //factory.CreateNode(2, file.FullName);
                     Node<Model> fileNode = sub.addChild(new Node<Model>(new FileModel(file.FullName)));
                 }
 
