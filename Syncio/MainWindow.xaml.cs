@@ -57,9 +57,14 @@ namespace Syncio
             sourceDir = new DirectoryInfo(source);
 
             //recurse through the file system
-            walkSource.WalkDirectoryTree(sourceDir);
+            Node<Model> root = new Node<Model>(new FolderModel("C:\\Users\\Connor\\3D Objects\\Test"));
+
+            walkSource.WalkDirectoryTree(sourceDir, root);
+
+
 
             walkSource.PrintTree();
+
 
 
 
@@ -78,7 +83,7 @@ namespace Syncio
 
 
             targetDir = new DirectoryInfo(target);
-            walkTarget.WalkDirectoryTree(targetDir);
+            //walkTarget.WalkDirectoryTree(targetDir);
 
             
         }

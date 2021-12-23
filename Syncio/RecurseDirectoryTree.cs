@@ -9,17 +9,17 @@ namespace Syncio
     {
 
         List<string> subDirectories = new List<string>();
-        Node<Model> node = new Node<Model>(null);
+        //Node<Model> root = new Node<Model>(null);
         NodeFactory factory = new NodeFactory();
 
-
-
+        private List<Node<Model>> directoryList = new List<Node<Model>>();
+        //private Node<Model> root = new Node<Model>(new FolderModel("C:\\Users\\Connor\\3D Objects\\Test")); 
 
         public RecurseDirectoryTree()
         {
-            //node.addChild(new Node<Model>(new FolderModel("C:\\Users\\Connor\\3D Objects\\Test")));
+
         }
-        public void WalkDirectoryTree(System.IO.DirectoryInfo directory)
+        public void WalkDirectoryTree(System.IO.DirectoryInfo directory, Node<Model> root)
         {
             System.IO.FileInfo[] files = null;
             System.IO.DirectoryInfo[] subDirs = null;
@@ -29,25 +29,28 @@ namespace Syncio
             //on the first pass, this is the root of the directory tree 
 
             //this needs to be a new node every pass, node1, node2, and so on
-            //node.addChild(new Node<Model>(new FolderModel(directory.ToString())));
+
+            Node<Model> sub = root.addChild(new Node<Model>(new FolderModel(directory.ToString())));
 
 
             //if there is a new directory, that needs to be a new node, and the files below needed to be added to that node, instead of the just the root
 
 
-            //node = factory.CreateNode(1, directory.ToString());
-            factory.CreateNode(1, directory.ToString());
+            directoryList.Add(root);
+            //factory.CreateNode(1, directory.ToString());
+  
+
 
             // First, process all the files directly under this folder
             try
             {
                 files = directory.GetFiles("*.*");
-  
+
             }
 
             catch (UnauthorizedAccessException e)
             {
-               Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
             }
 
             catch (System.IO.DirectoryNotFoundException e)
@@ -62,9 +65,10 @@ namespace Syncio
                 foreach (System.IO.FileInfo file in files)
                 {
                     //node.addChild(new Node<Model>(new FileModel(file.FullName)));
-                    
-                    //node.addChild(factory.CreateNode(2, file.FullName));
-                    factory.CreateNode(2, file.FullName);
+
+
+                    //factory.CreateNode(2, file.FullName);
+                    Node<Model> fileNode = sub.addChild(new Node<Model>(new FileModel(file.FullName)));
                 }
 
                 // Now find all the subdirectories under this directory.
@@ -77,7 +81,7 @@ namespace Syncio
                     subDirectories.Add(dirInfo.ToString());
 
                     // Resursive call for each subdirectory.
-                    WalkDirectoryTree(dirInfo);
+                    WalkDirectoryTree(dirInfo, sub);
 
 
                 }
@@ -95,19 +99,12 @@ namespace Syncio
         public void PrintTree()
         {
 
-           factory.print();
-
-           //node.printTree(node, " ");
+            //factory.print();
+            var rootNode = directoryList[0];
+            rootNode.printTree(rootNode, " ");
 
 
         }
-
-
-        public Node<Model> GetDirectoryTree()
-        {
-            return node;
-        }
-
 
 
     }

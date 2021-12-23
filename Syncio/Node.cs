@@ -13,7 +13,6 @@ namespace Syncio
 
             private Node<T> parent = null;
 
-            List<T> nodelist;
 
             public Node(T data)
             {
@@ -23,14 +22,14 @@ namespace Syncio
 
             public Node<T> addChild(Node<T> child)
             {
-                child.setParent(child); //was originally passing "this" keyword
+                child.setParent(this); //was originally passing "this" keyword
                 this.children.Add(child);
                 return child;
             }
 
             public void addChildren(List<Node<T>> children)
             {
-                children.ForEach(each => each.setParent(parent)); //was originally passing "this" keyword
+                children.ForEach(each => each.setParent(this)); //was originally passing "this" keyword
                 this.children.AddRange(children);
 
             }
@@ -66,7 +65,8 @@ namespace Syncio
         public void printTree(Node<T> node, String appender)
         {
             Debug.WriteLine(appender + node.getData());
-            node.getChildren().ForEach(each => printTree(each, appender + appender));
+
+            node.getChildren().ForEach(child => printTree(child, appender + appender));
 
 
         }
