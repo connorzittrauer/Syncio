@@ -60,7 +60,7 @@ namespace Syncio
                 //here is where the subdirectories are retrieved
                 foreach (System.IO.DirectoryInfo dirInfo in subDirs)
                 {
-
+                    //Node<Model> sub = root.addChild(new Node<Model>(new FolderModel(directory.ToString())));
                     subDirectories.Add(dirInfo.ToString());
 
                     // Resursive call for each subdirectory.

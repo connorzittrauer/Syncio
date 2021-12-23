@@ -57,7 +57,7 @@ namespace Syncio
             sourceDir = new DirectoryInfo(source);
 
             //recurse through the file system
-            Node<Model> root = new Node<Model>(new FolderModel("C:\\Users\\Connor\\3D Objects\\Test"));
+            Node<Model> root = new Node<Model>(new FolderModel(sourceDir.ToString()));
 
             walkSource.WalkDirectoryTree(sourceDir, root);
 
