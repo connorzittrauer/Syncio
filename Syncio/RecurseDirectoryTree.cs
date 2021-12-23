@@ -11,8 +11,6 @@ namespace Syncio
         List<string> subDirectories = new List<string>();
 
         private List<Node<Model>> directoryList = new List<Node<Model>>();
-
-
         public RecurseDirectoryTree()
         {
 
@@ -24,7 +22,10 @@ namespace Syncio
 
 
             //a new node is added to the root (root directory) for each sub directory here
-            Node<Model> sub = root.addChild(new Node<Model>(new FolderModel(directory.ToString())));
+
+             Node<Model> sub = root.addChild(new Node<Model>(new FolderModel(directory.ToString())));
+      
+
 
             directoryList.Add(root);
 

@@ -58,7 +58,7 @@ namespace Syncio
 
             //recurse through the file system
             Node<Model> root = new Node<Model>(new FolderModel(sourceDir.ToString()));
-
+            
             walkSource.WalkDirectoryTree(sourceDir, root);
 
 
