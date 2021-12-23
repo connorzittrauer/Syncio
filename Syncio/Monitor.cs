@@ -58,7 +58,7 @@ namespace Syncio
         private void OnDeleted(object sender, FileSystemEventArgs e)
         {
             //this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"Deleted: {e.FullPath}"));
-            var log = $"Deleted: {e.FullPath}";
+            Debug.WriteLine($"Deleted: {e.FullPath}");
             //Debug.WriteLine(log);
         }
 

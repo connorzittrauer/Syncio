@@ -36,10 +36,6 @@ namespace Syncio
             InitializeComponent();
         }
 
-
-
-        //so now I've got two trees that represent each directory need to compare and copy over the relevant files
-
         private void BaseDirectoryInput_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
@@ -59,14 +55,10 @@ namespace Syncio
             //recurse through the file system
             Node<Model> root = new Node<Model>(new FolderModel(sourceDir.ToString()));
             
-            walkSource.WalkDirectoryTree(sourceDir, root);
-
-
+            //walkSource.WalkDirectoryTree(sourceDir, root);
+            walkSource.WalkDirectoryTree(sourceDir);
 
             walkSource.PrintTree();
-
-
-
 
         }
 

@@ -1,79 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace Syncio
 {
+    
     class RecurseDirectoryTree
     {
-
+        private Node<Model> root;
         List<string> subDirectories = new List<string>();
-
-        private List<Node<Model>> directoryList = new List<Node<Model>>();
-        public RecurseDirectoryTree()
+        Monitor watcher = new Monitor();
+        public void WalkDirectoryTree(DirectoryInfo directory)
         {
-
-        }
-        public void WalkDirectoryTree(System.IO.DirectoryInfo directory, Node<Model> root)
-        {
-            System.IO.FileInfo[] files = null;
-            System.IO.DirectoryInfo[] subDirs = null;
-
-
-            //a new node is added to the root (root directory) for each sub directory here
-
-             Node<Model> sub = root.addChild(new Node<Model>(new FolderModel(directory.ToString())));
-      
-
-
-            directoryList.Add(root);
-
-            // First, process all the files directly under this folder
-            try
-            {
-                files = directory.GetFiles("*.*");
-
-            }
-
-            catch (UnauthorizedAccessException e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-
-            catch (System.IO.DirectoryNotFoundException e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-
-
-            //here is where the files are retrieved
-            if (files != null)
-            {
-                foreach (System.IO.FileInfo file in files)
-                {
-                    Node<Model> fileNode = sub.addChild(new Node<Model>(new FileModel(file.FullName)));
-                }
-
-                // Now find all the subdirectories under this directory.
-                subDirs = directory.GetDirectories();
-
-                //here is where the subdirectories are retrieved
-                foreach (System.IO.DirectoryInfo dirInfo in subDirs)
-                {
-                    //Node<Model> sub = root.addChild(new Node<Model>(new FolderModel(directory.ToString())));
-                    subDirectories.Add(dirInfo.ToString());
-
-                    // Resursive call for each subdirectory.
-                    WalkDirectoryTree(dirInfo, sub);
-
-
-                }
-
-
-            }
+            root = WalkDirectoryTree(directory, null);
         }
 
+        private Node<Model> WalkDirectoryTree(DirectoryInfo directory, Node<Model> parent)
+        {
+            var current = CreateDirectoryNode(directory, parent);
+
+            var files = directory.GetFiles("*.*");
+            foreach (var file in files)
+            {
+                // note that files are added under the current directory, not root
+                CreateFileNode(file, current);
+            }
+
+            var subDirs = directory.GetDirectories();
+            foreach (var dirInfo in subDirs)
+            {
+                // recursion at the current node, not root
+                WalkDirectoryTree(dirInfo, current);
+            }
+
+            // it's not a void method; it returns the current node so that we can set the root in the public WalkDirectoryTree
+            return current;
+        }
+
+        private Node<Model> CreateDirectoryNode(DirectoryInfo directory, Node<Model> parent)
+        {
+            var node = new Node<Model>(new FolderModel(directory.ToString()));
+            subDirectories.Add(directory.ToString());
+
+            // ?. notation so that it's skipped if parent is null        
+            parent?.addChild(node);
+
+            return node;
+        }
+
+        private Node<Model> CreateFileNode(FileInfo file, Node<Model> parent)
+        {
+            var node = new Node<Model>(new FileModel(file.FullName));
+            
+
+            // ?. notation so that it's skipped if parent is null        
+            parent?.addChild(node);
+
+            return node;
+        }
 
         public List<String> GetSubs()
         {
@@ -83,13 +69,9 @@ namespace Syncio
         public void PrintTree()
         {
 
-            //factory.print();
-            var rootNode = directoryList[0];
-            rootNode.printTree(rootNode, " ");
+            root.printTree(root, " ");
 
 
         }
-
-
     }
 }

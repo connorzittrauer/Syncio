@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace Syncio
@@ -12,7 +13,7 @@ namespace Syncio
             private List<Node<T>> children = new List<Node<T>>();
 
             private Node<T> parent = null;
-
+           
 
             public Node(T data)
             {
@@ -60,16 +61,65 @@ namespace Syncio
                 return parent;
             }
 
+            public void deleteNode()
+            {
+                if (parent != null)
+                {
+                    int index = this.parent.getChildren().IndexOf(this);
+                    this.parent.getChildren().Remove(this);
+                    foreach (Node<T> node in getChildren())
+                    {
+                        node.setParent(this.parent);
+                    }
+                    //***original in Java this.parent.getChildren().addAll(index, this.getChildren());
+                    this.parent.getChildren().InsertRange(index, this.getChildren());
+                }
+                else
+                {
+                    deleteRootNode();
+                }
+                this.getChildren().Clear();
+            }
+            public Node<T> deleteRootNode()
+            {
+                if (parent != null)
+                {
+                    throw new Exception("Illegal state, delete root node not called on root");
+                }
+                Node<T> newParent = null;
+                //*** original Java if (!getChildren().isEmpty()) 
+                if (getChildren().Any())
+                {
+                    //*** original Java newParent = getChildren().get(0);
+                    newParent = getChildren().ElementAt(0);
+                    newParent.setParent(null);
+
+                    ////*** original Java getChildren().remove(0);
+                    getChildren().RemoveAt(0);
+
+                    foreach (Node<T> node in getChildren())
+                    {
+                        node.setParent(newParent);
+                    }
+
+                    ////*** original Java newParent.getChildren().addAll(getChildren());
+                    newParent.getChildren().AddRange(getChildren());
+
+                }
+                this.getChildren().Clear();
+                return newParent;
+
+            }
 
 
         public void printTree(Node<T> node, String appender)
-        {
-            Debug.WriteLine(appender + node.getData());
+            {
+                Debug.WriteLine(appender + node.getData());
 
-            node.getChildren().ForEach(child => printTree(child, appender + appender));
+                node.getChildren().ForEach(child => printTree(child, appender + appender));
 
 
-        }
+            }
 
 
 
