@@ -5,21 +5,26 @@ using System.Text;
 
 namespace Syncio
 {
-    class FolderModel : Model
+    class FileModel : Model
     {
-        string directory;
-
+        string filePath;
+        string hash;
+        Hasher hasher = new Hasher();
         override
         public string Hash
         {
-            get { return null; }
+            get
+            { return hash; }
+
         }
         override
         public string AbsolutePath
         {
             get
             {
-                return new DirectoryInfo(directory).FullName;
+                var temp = new FileInfo(filePath);
+                var cast = (FileSystemInfo)(temp);
+                return cast.FullName.ToString();
             }
 
         }
@@ -28,8 +33,9 @@ namespace Syncio
         {
             get
             {
-                return new DirectoryInfo(directory).Name;
-
+                var temp = new FileInfo(filePath);
+                var cast = (FileSystemInfo)(temp);
+                return cast.Name.ToString();
             }
         }
 
@@ -38,7 +44,7 @@ namespace Syncio
         {
             get
             {
-                var temp = new FileInfo(directory);
+                var temp = new FileInfo(filePath);
                 var cast = (FileSystemInfo)(temp);
                 return cast.CreationTime.ToString();
             }
@@ -50,21 +56,21 @@ namespace Syncio
             get
             {
 
-                var temp = new FileInfo(directory);
+                var temp = new FileInfo(filePath);
                 var cast = (FileSystemInfo)(temp);
                 return cast.Attributes.ToString();
             }
         }
 
-        public FolderModel(String directory)
+        public FileModel(String filePath)
         {
-            this.directory = directory;
+            this.filePath = filePath;
+            hash = hasher.GenerateHash(filePath);
         }
 
         public override string ToString()
         {
-            return AbsolutePath;
+            return AbsolutePath + " (" + Attributes + ")";
         }
-
     }
 }

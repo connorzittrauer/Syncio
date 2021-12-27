@@ -73,5 +73,10 @@ namespace Syncio
 
 
         }
+
+        public Node<Model> GetTree()
+        {
+            return root;
+        }
     }
 }

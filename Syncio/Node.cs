@@ -61,7 +61,24 @@ namespace Syncio
                 return parent;
             }
 
-            public void deleteNode()
+        public Node<T> Find(Node<T> root, string data)
+        {
+            //base case
+            if (root == null || data.Equals(root.getData()))
+            {
+                return root;
+            }
+
+            Node<T>[] children = root.getChildren().ToArray();
+            Node<T> target = null;
+            for (int i = 0; target == null && i < children.Length; i++)
+            {
+                target = Find(children[i], data);
+            }
+            return target;
+        }
+
+        public void deleteNode()
             {
                 if (parent != null)
                 {

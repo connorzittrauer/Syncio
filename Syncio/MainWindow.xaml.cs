@@ -28,6 +28,7 @@ namespace Syncio
 
         RecurseDirectoryTree walkSource = new RecurseDirectoryTree();
         RecurseDirectoryTree walkTarget = new RecurseDirectoryTree();
+        Node<Model> sourceTree, targetTree;
         FileManager driver = new FileManager();
 
         String source, target;
@@ -35,6 +36,8 @@ namespace Syncio
         {
             InitializeComponent();
         }
+        //if a change is detected in the left tree, search the relevant node parent node (directory) that contains 
+        //the information, add the new/altered node to the right tree.
 
         private void BaseDirectoryInput_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -52,13 +55,11 @@ namespace Syncio
 
             sourceDir = new DirectoryInfo(source);
 
-            //recurse through the file system
-            Node<Model> root = new Node<Model>(new FolderModel(sourceDir.ToString()));
-            
-            //walkSource.WalkDirectoryTree(sourceDir, root);
             walkSource.WalkDirectoryTree(sourceDir);
 
-            walkSource.PrintTree();
+
+            sourceTree = walkSource.GetTree();
+            sourceTree.printTree(sourceTree, " ");
 
         }
 
@@ -75,7 +76,11 @@ namespace Syncio
 
 
             targetDir = new DirectoryInfo(target);
-            //walkTarget.WalkDirectoryTree(targetDir);
+
+            walkTarget.WalkDirectoryTree(targetDir);
+            targetTree = walkTarget.GetTree();
+
+            targetTree.printTree(targetTree, " ");
 
             
         }
@@ -88,7 +93,7 @@ namespace Syncio
         }
 
         /*
-          This adds monitors to the root director, to every sub directory and so on
+          This adds monitors to the root directory, to every sub directory and so on
          */
         private void AddMonitors()
         {
