@@ -21,42 +21,42 @@ namespace Syncio
             
             }
 
-            public Node<T> addChild(Node<T> child)
+            public Node<T> AddChild(Node<T> child)
             {
-                child.setParent(this); //was originally passing "this" keyword
+                child.SetParent(this); //was originally passing "this" keyword
                 this.children.Add(child);
                 return child;
             }
 
-            public void addChildren(List<Node<T>> children)
+            public void AddChildren(List<Node<T>> children)
             {
-                children.ForEach(each => each.setParent(this)); //was originally passing "this" keyword
+                children.ForEach(each => each.SetParent(this)); //was originally passing "this" keyword
                 this.children.AddRange(children);
 
             }
 
-            public List<Node<T>> getChildren()
+            public List<Node<T>> GetChildren()
             {
                 return children;
             }
 
-            public T getData()
+            public T GetData()
             {
 
                 return data;
             }
 
-            public void setData(T data)
+            public void SetData(T data)
             {
                 this.data = data;
             }
 
-            private void setParent(Node<T> parent)
+            private void SetParent(Node<T> parent)
             {
                 this.parent = parent;
             }
 
-            public Node<T> getParent()
+            public Node<T> GetParent()
             {
                 return parent;
             }
@@ -64,12 +64,12 @@ namespace Syncio
         public Node<T> Find(Node<T> root, string data)
         {
             //base case
-            if (root == null || data.Equals(root.getData()))
+            if (root == null || data.Equals(root.GetData()))
             {
                 return root;
             }
 
-            Node<T>[] children = root.getChildren().ToArray();
+            Node<T>[] children = root.GetChildren().ToArray();
             Node<T> target = null;
             for (int i = 0; target == null && i < children.Length; i++)
             {
@@ -78,26 +78,26 @@ namespace Syncio
             return target;
         }
 
-        public void deleteNode()
+        public void DeleteNode()
             {
                 if (parent != null)
                 {
-                    int index = this.parent.getChildren().IndexOf(this);
-                    this.parent.getChildren().Remove(this);
-                    foreach (Node<T> node in getChildren())
+                    int index = this.parent.GetChildren().IndexOf(this);
+                    this.parent.GetChildren().Remove(this);
+                    foreach (Node<T> node in GetChildren())
                     {
-                        node.setParent(this.parent);
+                        node.SetParent(this.parent);
                     }
                     //***original in Java this.parent.getChildren().addAll(index, this.getChildren());
-                    this.parent.getChildren().InsertRange(index, this.getChildren());
+                    this.parent.GetChildren().InsertRange(index, this.GetChildren());
                 }
                 else
                 {
-                    deleteRootNode();
+                    DeleteRootNode();
                 }
-                this.getChildren().Clear();
+                this.GetChildren().Clear();
             }
-            public Node<T> deleteRootNode()
+            public Node<T> DeleteRootNode()
             {
                 if (parent != null)
                 {
@@ -105,39 +105,40 @@ namespace Syncio
                 }
                 Node<T> newParent = null;
                 //*** original Java if (!getChildren().isEmpty()) 
-                if (getChildren().Any())
+                if (GetChildren().Any())
                 {
                     //*** original Java newParent = getChildren().get(0);
-                    newParent = getChildren().ElementAt(0);
-                    newParent.setParent(null);
+                    newParent = GetChildren().ElementAt(0);
+                    newParent.SetParent(null);
 
                     ////*** original Java getChildren().remove(0);
-                    getChildren().RemoveAt(0);
+                    GetChildren().RemoveAt(0);
 
-                    foreach (Node<T> node in getChildren())
+                    foreach (Node<T> node in GetChildren())
                     {
-                        node.setParent(newParent);
+                        node.SetParent(newParent);
                     }
 
                     ////*** original Java newParent.getChildren().addAll(getChildren());
-                    newParent.getChildren().AddRange(getChildren());
+                    newParent.GetChildren().AddRange(GetChildren());
 
                 }
-                this.getChildren().Clear();
+                this.GetChildren().Clear();
                 return newParent;
 
             }
 
 
-        public void printTree(Node<T> node, String appender)
+        public void PrintTree(Node<T> node, String appender)
             {
-                Debug.WriteLine(appender + node.getData());
+                Debug.WriteLine(appender + node.GetData());
 
-                node.getChildren().ForEach(child => printTree(child, appender + appender));
+                node.GetChildren().ForEach(child => PrintTree(child, appender + appender));
 
 
             }
 
+      
 
 
     }

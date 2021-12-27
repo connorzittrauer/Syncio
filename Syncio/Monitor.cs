@@ -9,10 +9,15 @@ namespace Syncio
     class Monitor
     {
         FileSystemWatcher watcher;
+
+
+        /*if a change is detected in the left tree, search for the relevant node parent node (directory) that contains 
+        the information, add the new/altered node to the right tree. */
+
         public void Watch(String filePath)
         {
             watcher = new FileSystemWatcher(@filePath);
-            
+
             watcher.NotifyFilter = NotifyFilters.Attributes
                      | NotifyFilters.CreationTime
                      | NotifyFilters.DirectoryName
@@ -26,16 +31,16 @@ namespace Syncio
             watcher.Created += OnCreated;
             watcher.Deleted += OnDeleted;
             watcher.Renamed += OnRenamed;
-            //watcher.Error += OnError;
+            watcher.Error += OnError;
 
-            //watcher.Filter = "*.txt";
+            
             watcher.Filter = "*.*";
             watcher.IncludeSubdirectories = true;
             watcher.EnableRaisingEvents = true;
 
         }
 
-        //These methods need to to the target directory on changed
+
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
             if (e.ChangeType != WatcherChangeTypes.Changed)
@@ -44,7 +49,7 @@ namespace Syncio
             }
             var log = $"Changed: {e.FullPath}";
 
-            //Debug.WriteLine(log);
+            Debug.WriteLine(log);
 
         }
 
@@ -57,28 +62,23 @@ namespace Syncio
 
         private void OnDeleted(object sender, FileSystemEventArgs e)
         {
-            //this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"Deleted: {e.FullPath}"));
+
             Debug.WriteLine($"Deleted: {e.FullPath}");
-            //Debug.WriteLine(log);
+
         }
 
 
 
         private void OnRenamed(object sender, RenamedEventArgs e)
         {
-            //this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"Renamed:"));
-            //this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"    Old: {e.OldFullPath}"));
-            //this.Dispatcher.Invoke(() => ListBoxLog.Items.Add($"    New: {e.FullPath}"));
-
-
 
             Debug.WriteLine($"Renamed:");
             Debug.WriteLine($"Old: {e.OldFullPath}");
             Debug.WriteLine($"New: {e.FullPath}");
         }
 
-        //private void OnError(object sender, ErrorEventArgs e) =>
-        //    PrintException(e.GetException());
+        private void OnError(object sender, ErrorEventArgs e) =>
+            PrintException(e.GetException());
 
         private void PrintException(Exception? ex)
         {
@@ -87,7 +87,7 @@ namespace Syncio
                 Debug.WriteLine($"Message: {ex.Message}");
                 Debug.WriteLine("Stacktrace:" + ex.StackTrace);
                 Debug.WriteLine("Inner Exception: " + ex.InnerException);
-               
+
             }
         }
     }

@@ -67,7 +67,7 @@ namespace Syncio
             this.filePath = filePath;
             hash = hasher.GenerateHash(filePath);
         }
-
+        
         public override string ToString()
         {
             return AbsolutePath + " (" + Attributes + ")";

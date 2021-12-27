@@ -59,7 +59,7 @@ namespace Syncio
 
 
             sourceTree = walkSource.GetTree();
-            sourceTree.printTree(sourceTree, " ");
+            sourceTree.PrintTree(sourceTree, " ");
 
         }
 
@@ -80,9 +80,9 @@ namespace Syncio
             walkTarget.WalkDirectoryTree(targetDir);
             targetTree = walkTarget.GetTree();
 
-            targetTree.printTree(targetTree, " ");
+            targetTree.PrintTree(targetTree, " ");
 
-            
+
         }
 
         private void ButtonSync_Click(object sender, RoutedEventArgs e)
@@ -107,10 +107,12 @@ namespace Syncio
                 monitor.Watch(subDirectory);
             }
 
+
+
         }
 
 
-  
+
 
 
     }

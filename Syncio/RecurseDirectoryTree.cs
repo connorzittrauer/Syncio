@@ -31,6 +31,7 @@ namespace Syncio
             var subDirs = directory.GetDirectories();
             foreach (var dirInfo in subDirs)
             {
+
                 // recursion at the current node, not root
                 WalkDirectoryTree(dirInfo, current);
             }
@@ -45,7 +46,7 @@ namespace Syncio
             subDirectories.Add(directory.ToString());
 
             // ?. notation so that it's skipped if parent is null        
-            parent?.addChild(node);
+            parent?.AddChild(node);
 
             return node;
         }
@@ -54,9 +55,10 @@ namespace Syncio
         {
             var node = new Node<Model>(new FileModel(file.FullName));
             
+            
 
             // ?. notation so that it's skipped if parent is null        
-            parent?.addChild(node);
+            parent?.AddChild(node);
 
             return node;
         }
@@ -69,7 +71,7 @@ namespace Syncio
         public void PrintTree()
         {
 
-            root.printTree(root, " ");
+            root.PrintTree(root, " ");
 
 
         }
@@ -78,5 +80,7 @@ namespace Syncio
         {
             return root;
         }
+
+
     }
 }
